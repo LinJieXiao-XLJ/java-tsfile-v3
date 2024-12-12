@@ -75,7 +75,7 @@ public class TreeTsFileV3_NoSameDevice_SameTimeStamp {
             // 关闭写入
             tsFileWriter.close();
         } catch (IOException | WriteProcessException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

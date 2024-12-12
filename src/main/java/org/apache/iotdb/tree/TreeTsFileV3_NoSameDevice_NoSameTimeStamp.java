@@ -70,12 +70,12 @@ public class TreeTsFileV3_NoSameDevice_NoSameTimeStamp {
             // 执行写入次数
             for (int times = 0; times < Integer.parseInt(config.getConfigValue("LOOP")); times++) {
                 write_tsfile(tsFileWriter, times);
-                writer_tsfile_align(tsFileWriter, times);
+//                writer_tsfile_align(tsFileWriter, times);
             }
             // 关闭写入
             tsFileWriter.close();
         } catch (IOException | WriteProcessException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 
@@ -299,20 +299,20 @@ public class TreeTsFileV3_NoSameDevice_NoSameTimeStamp {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        // 查询对齐时间序列
-        try {
-            TsFileSequenceReader fileSequenceReader = new TsFileSequenceReader(path);
-            TsFileReader reader = new TsFileReader(fileSequenceReader);
-            List<Path> selectedSeries = new ArrayList<>();
-            selectedSeries.add(new Path(alignedDeviceName + "_0_0", measurementName + "_" + "INT32" + "_0_0", true));
-            selectedSeries.add(new Path(alignedDeviceName + "_0_0", measurementName + "_" + "TIMESTAMP" + "_0_0", true));
-            QueryDataSet dataSet = reader.query(QueryExpression.create(selectedSeries, null));
-            while (dataSet.hasNext()) {
-                System.out.println(dataSet.next());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+//        // 查询对齐时间序列
+//        try {
+//            TsFileSequenceReader fileSequenceReader = new TsFileSequenceReader(path);
+//            TsFileReader reader = new TsFileReader(fileSequenceReader);
+//            List<Path> selectedSeries = new ArrayList<>();
+//            selectedSeries.add(new Path(alignedDeviceName + "_0_0", measurementName + "_" + "INT32" + "_0_0", true));
+//            selectedSeries.add(new Path(alignedDeviceName + "_0_0", measurementName + "_" + "TIMESTAMP" + "_0_0", true));
+//            QueryDataSet dataSet = reader.query(QueryExpression.create(selectedSeries, null));
+//            while (dataSet.hasNext()) {
+//                System.out.println(dataSet.next());
+//            }
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
 }
